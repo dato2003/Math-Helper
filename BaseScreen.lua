@@ -6,6 +6,7 @@ local scene = composer.newScene()
 function Handler(event)
   --print("logging")
   if event.phase=="began" then
+    print(Amount)
     if Amount>9 and Amount<14 then
         NumberText.size=NumberText.size-3
         NumberText.x=NumberText.x+10
@@ -164,6 +165,24 @@ function Handler(event)
           --print("das")
         end
       end
+    end
+end
+
+function Delete(event)
+    if event.phase=="began" and Number~=0 then
+        Number=Number-Number%10
+        Number=Number/10
+        NumberText.text=Number
+        NumberText.x=NumberText.x+8
+        print(Number)
+        if Amount-1>0 then
+        Amount=Amount-1
+        end
+        print(NumberText.size.." "..Amount)
+        if Amount>9 and NumberText.size<37 then
+            NumberText.size=NumberText.size+3
+            NumberText.x=NumberText.x-10
+        end
     end
 end
 
@@ -388,6 +407,7 @@ function scene:create( event )
     button9.y = NumberText.y+300
     button9.ID=9
 
+    TypeScreen:addEventListener("touch",Delete)
 
     sceneGroup:insert(background)
     sceneGroup:insert(TypeScreen)
